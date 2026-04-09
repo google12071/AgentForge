@@ -28,6 +28,7 @@ dependencies = [
     # LLM SDK
     "dashscope>=1.14.0",    # 通义千问
     "openai>=1.0.0",        # DeepSeek 兼容 OpenAI 格式
+    "langchain-openai>=1.1.12",
 ]
 
 [project.optional-dependencies]

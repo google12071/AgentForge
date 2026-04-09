@@ -37,7 +37,3 @@ def test_llm_chat():
 
     logger.info(f"Chat Response: {response}")
     print(f"\n✅ 多轮对话测试成功！\n响应: {response}")
-
-
-if __name__ == "__main__":
-    test_llm_connection()
