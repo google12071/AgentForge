@@ -1,7 +1,7 @@
 # AgentForge - 90天学习计划
 
 > 渐进式通用任务Agent平台开发路线
-> 更新时间：2026-04-08
+> 更新时间：2026-04-09
 
 ---
 
@@ -45,14 +45,23 @@
 
 ### 任务清单
 
-#### Day 1: 环境准备
-- [ ] 创建GitHub仓库 `AgentForge`
-- [ ] 配置Python虚拟环境 (Python 3.10+)
-- [ ] 安装核心依赖
+#### Day 1: 环境准备 ✅
+- [x] 项目目录已存在
+- [x] 配置Python虚拟环境 (Python 3.12.12，使用 uv)
+- [x] 安装核心依赖 (149 packages)
   ```
-  pip install langchain langgraph openai python-dotenv pydantic
+  # 使用 uv 管理依赖
+  uv venv --python 3.12
+  uv sync
+  
+  # 已安装核心包:
+  # langchain 1.2.15
+  # langgraph 1.1.6
+  # chromadb 0.4.24 (macOS Intel 兼容)
+  # llama-index 0.14.20
+  # onnxruntime 1.19.2
   ```
-- [ ] 配置国产模型API密钥 (智谱/通义/DeepSeek)
+- [ ] 配置国产模型API密钥 (已有通义千问/DeepSeek)
 
 #### Day 2: 项目结构
 - [ ] 创建项目目录结构
@@ -191,15 +200,15 @@ class ConversationManager:
 | 技能 | 覆盖程度 | 实践内容 |
 |------|---------|---------|
 | RAG与知识检索 | ⭐⭐⭐⭐⭐ | 向量数据库、检索优化 |
-| 向量数据库 | ⭐⭐⭐⭐ | FAISS/ChromaDB选型与使用 |
-| LlamaIndex | ⭐⭐⭐⭐ | 文档索引、查询引擎 |
+| 向量数据库 | ⭐⭐⭐⭐ | ChromaDB 0.4.x (macOS Intel 兼容) |
+| LlamaIndex | ⭐⭐⭐⭐ | 文档索引、查询引擎 (0.14.20) |
 | 文档处理 | ⭐⭐⭐ | 文档加载、切分策略 |
 
 ### 功能规划
 
 #### v0.5: 向量数据库集成 (Day 16-20)
-- [ ] 选型与安装向量数据库 (ChromaDB/FAISS)
-- [ ] 实现Embedding接口
+- [ ] ChromaDB 0.4.x 使用 (已安装)
+- [ ] 实现Embedding接口 (通义千问 text-embedding-v3)
 - [ ] 文档向量化存储
 - [ ] 基础检索功能
 

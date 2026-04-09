@@ -1,0 +1,28 @@
+
+# AgentForge Configuration
+
+project:
+  name: AgentForge
+  version: "0.1.0"
+  description: A progressive AI Agent platform for task automation
+
+llm:
+  provider: qwen  # qwen | deepseek
+  model: qwen-plus
+  embedding_model: text-embedding-v3
+  temperature: 0.7
+  max_tokens: 4096
+
+rag:
+  vector_db: chroma
+  chunk_size: 500
+  chunk_overlap: 50
+
+agent:
+  max_iterations: 10
+  timeout: 30
+
+harness:
+  enable_guardrails: true
+  enable_evaluation: true
+  enable_monitoring: true

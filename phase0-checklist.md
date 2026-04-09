@@ -9,76 +9,61 @@
 
 ### 1.1 GitHub仓库创建
 
-- [ ] 登录GitHub，创建新仓库
-  - 仓库名：`AgentForge`
-  - 描述：`A progressive AI Agent platform for task automation`
-  - 可见性：Public
-  - 勾选：Add a README file
-  - 勾选：Add .gitignore (Python模板)
-  - License：MIT
-
-- [ ] 克隆仓库到本地
-  ```bash
-  cd /Users/lfq/file
-  git clone https://github.com/[你的用户名]/AgentForge.git
-  cd AgentForge
-  ```
+- [x] 项目目录已存在 `/Users/lfq/file/agentforge`
+- [x] Git仓库已初始化，当前分支: main
 
 ### 1.2 Python环境配置
 
-- [ ] 检查Python版本 (需要3.10+)
+- [x] 检查Python版本
   ```bash
-  python --version
+  # 系统默认 Python 3.14.2，但 onnxruntime 不支持
+  # 使用 uv 创建 Python 3.12 虚拟环境
+  uv venv --python 3.12
+  source .venv/bin/activate
+  python --version  # 应显示 3.12.12
   ```
 
-- [ ] 创建虚拟环境
+- [x] 项目配置 (pyproject.toml)
+  ```toml
+  [project]
+  name = "agentforge"
+  version = "0.1.0"
+  requires-python = ">=3.11"
+
+  dependencies = [
+      # 核心 Agent 框架
+      "langchain>=1.0",
+      "langgraph>=1.0",
+      "langchain-community>=0.3",
+      # 向量数据库 (macOS Intel 兼容)
+      "chromadb>=0.4,<0.5",
+      "onnxruntime<1.20",
+      # RAG 框架
+      "llama-index>=0.10",
+      # 数据验证与配置
+      "pydantic>=2.0",
+      "pydantic-settings>=2.0",
+      # 日志
+      "loguru>=0.7.0",
+      # 环境变量
+      "python-dotenv>=1.0.0",
+  ]
+  ```
+
+- [x] 安装依赖
   ```bash
-  python -m venv venv
-  source venv/bin/activate  # macOS/Linux
-  ```
-
-- [ ] 创建requirements.txt
-  ```
-  # Core
-  langchain>=0.3.0
-  langgraph>=0.2.0
-  langchain-openai>=0.2.0
-  langchain-community>=0.3.0
-
-  # RAG
-  chromadb>=0.5.0
-  faiss-cpu>=1.8.0
-  llama-index>=0.11.0
-  pypdf>=4.0.0
-
-  # LLM API (国产模型)
-  zhipuai>=2.0.0
-  dashscope>=1.14.0
-  openai>=1.0.0  # 兼容OpenAI API格式
-
-  # Utils
-  python-dotenv>=1.0.0
-  pydantic>=2.0.0
-  pydantic-settings>=2.0.0
-  rich>=13.0.0
-  typer>=0.9.0
-
-  # Dev
-  pytest>=8.0.0
-  pytest-asyncio>=0.23.0
-  black>=24.0.0
-  ruff>=0.3.0
-  ```
-
-- [ ] 安装依赖
-  ```bash
-  pip install -r requirements.txt
+  uv sync
+  # 安装 149 packages，包括:
+  # - langchain 1.2.15
+  # - langgraph 1.1.6
+  # - chromadb 0.4.24
+  # - llama-index 0.14.20
+  # - onnxruntime 1.19.2
   ```
 
 ### 1.3 API密钥配置
 
 - [ ] 选择国产模型，获取API密钥
-  - 智谱AI: https://open.bigmodel.cn/
   - 通义千问: https://dashscope.console.aliyun.com/
   - DeepSeek: https://platform.deepseek.com/
 
@@ -89,10 +74,8 @@
 
 - [ ] 编辑.env文件，填入API密钥
   ```
-  # 选择一个即可，后续可配置多模型切换
-  ZHIPU_API_KEY=your_zhipu_api_key
-  # DASHSCOPE_API_KEY=your_dashscope_api_key
-  # DEEPSEEK_API_KEY=your_deepseek_api_key
+  DASHSCOPE_API_KEY=your_dashscope_api_key
+  DEEPSEEK_API_KEY=your_deepseek_api_key
   ```
 
 ---

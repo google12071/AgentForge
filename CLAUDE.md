@@ -62,25 +62,27 @@ Phase 6 (Day 86-90)   平台整合
 
 ### 核心决策
 
-| 类别 | 选择 | 版本 | 原因 |
-|------|------|------|------|
-| **Python 版本** | 3.11 | - | 稳定成熟，库兼容性好，性能提升明显 |
-| **LangChain** | v1.x | v1.2.0 | 重大重构版已稳定，Agent底层使用LangGraph runtime |
-| **LangGraph** | v1.x | v1.1 | 首个稳定持久化Agent框架，被Uber/LinkedIn/Klarna采用 |
-| **向量数据库** | ChromaDB | v0.5.x | 本地嵌入式，零配置，快速迭代 |
-| **配置管理** | Pydantic Settings | v2.x | 类型安全，环境变量支持，与数据模型统一 |
+| 类别 | 选择 | 实际版本 | 原因 |
+|------|------|---------|------|
+| **Python 版本** | 3.12 | 3.12.12 | onnxruntime 不支持 3.14，chromadb 依赖 onnxruntime |
+| **LangChain** | v1.x | 1.2.15 | 重大重构版已稳定，Agent底层使用LangGraph runtime |
+| **LangGraph** | v1.x | 1.1.6 | 首个稳定持久化Agent框架，被Uber/LinkedIn/Klarna采用 |
+| **向量数据库** | ChromaDB | 0.4.24 | 本地嵌入式，零配置；macOS Intel 兼容版本 |
+| **onnxruntime** | <1.20 | 1.19.2 | ChromaDB 依赖，macOS Intel 兼容版本 |
+| **RAG 框架** | LlamaIndex | 0.14.20 | 知识检索补充方案，可与 LangGraph 协同 |
+| **配置管理** | Pydantic Settings | 2.13.1 | 类型安全，环境变量支持，与数据模型统一 |
 | **包管理** | uv | 最新版 | 极速现代方案，依赖分组支持 |
 | **代码风格** | Ruff | 最新版 | 一体化 lint + format，Rust 实现 |
-| **虚拟环境** | venv | Python 3.11 内置 | Python 官方方案，轻量标准 |
-| **日志系统** | Loguru | v0.7.x | 简洁易用，无需配置 |
+| **虚拟环境** | venv | Python 3.12 内置 | Python 官方方案，轻量标准 |
+| **日志系统** | Loguru | 0.7.3 | 简洁易用，无需配置 |
 | **测试框架** | pytest | v8.x | Python 标准，插件生态丰富 |
 
-> **注意**：LangChain v0.3 与 v1.x 不兼容，新项目直接使用 v1.x。
+> **兼容性说明**：系统默认 Python 3.14，但 onnxruntime 只支持 3.11/3.12。使用 `uv venv --python 3.12` 创建虚拟环境解决。
 
 ### 框架选择理由
 
 - **LangChain v1.x + LangGraph v1.x**：Agent 开发首选，已稳定，LangChain 提供高层抽象，LangGraph 提供底层编排控制。
-- **不引入 LlamaIndex**：LangChain v1.x 已满足 Agent 开发需求，避免多框架复杂度。
+- **同时引入 LlamaIndex**：作为 LangChain 的补充，LlamaIndex 在知识检索方面更专业，可与 LangGraph 协同使用。
 
 ### LLM 供应商与嵌入模型
 
@@ -94,26 +96,33 @@ Phase 6 (Day 86-90)   平台整合
 
 ```
 # 核心 Agent 框架
-langchain>=1.0
-langgraph>=1.0
-langchain-community>=1.0
+langchain>=1.0           # 实际: 1.2.15
+langgraph>=1.0           # 实际: 1.1.6
+langchain-community>=0.3 # 实际: 0.4.1
 
-# 向量数据库
-chromadb>=0.5.0
+# 向量数据库 (macOS Intel 兼容)
+chromadb>=0.4,<0.5       # 实际: 0.4.24
+onnxruntime<1.20         # 实际: 1.19.2
+
+# RAG 框架
+llama-index>=0.10        # 实际: 0.14.20
 
 # 数据验证与配置
-pydantic>=2.0
-pydantic-settings>=2.0
+pydantic>=2.0            # 实际: 2.12.5
+pydantic-settings>=2.0   # 实际: 2.13.1
 
 # 日志
-loguru>=0.7.0
+loguru>=0.7.0            # 实际: 0.7.3
 
-# 测试
+# 环境变量
+python-dotenv>=1.0.0     # 实际: 1.2.2
+
+# 测试 (dev)
 pytest>=8.0
-
-# LLM 供应商（按需安装）
-# langchain-zhipuai  # 智谱
-# 或通过 langchain-community 使用通义/DeepSeek
+pytest-asyncio>=0.23.0
+pytest-cov>=4.0
+ruff>=0.1.0
+mypy>=1.0
 ```
 
 ---
@@ -212,15 +221,15 @@ fix(agent): 修复工具调用错误处理
 
 **当前阶段**：Phase 0 - 项目初始化
 **开始时间**：2026-04-09
-**当前版本**：v0.0.0
+**当前版本**：v0.1.0
 
 ### Phase 0 任务清单
 
-#### Day 1: 环境准备
-- [ ] 创建GitHub仓库 `AgentForge` (Public)
-- [ ] 配置Python虚拟环境
-- [ ] 安装核心依赖
-- [ ] 获取国产模型API密钥
+#### Day 1: 环境准备 ✅
+- [x] 创建GitHub仓库 `AgentForge` (已存在本地项目)
+- [x] 配置Python虚拟环境 (Python 3.12.12)
+- [x] 安装核心依赖 (149 packages)
+- [ ] 获取国产模型API密钥 (已有通义千问/DeepSeek)
 
 #### Day 2: 项目结构
 - [ ] 创建目录结构
@@ -311,5 +320,6 @@ Self-Reflection: 自我反思纠错
 
 ---
 
-*最后更新：2026-04-08*
-*下一里程碑：Phase 0 完成*
+*最后更新：2026-04-09*
+*当前进度：Day 1 环境准备完成，依赖安装成功*
+*下一里程碑：Day 2 项目结构搭建*

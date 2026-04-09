@@ -1,7 +1,7 @@
 # AgentForge 技能覆盖追踪表
 
 > 基于AI Agent技能栈，追踪项目实践中的技能覆盖情况
-> 更新时间：2026-04-08
+> 更新时间：2026-04-09
 
 ---
 
@@ -40,9 +40,14 @@
 
 | 技能 | 实践内容 | 完成状态 |
 |------|---------|---------|
-| Claude Code最佳实践 | CLAUDE.md配置、Git工作流 | 🔲 |
-| Python AI生态 | 项目结构、依赖管理 | 🔲 |
-| Git仓库管理 | 分支策略、提交规范 | 🔲 |
+| Claude Code最佳实践 | CLAUDE.md配置、Git工作流 | 🔶 了解中 |
+| Python AI生态 | 项目结构、依赖管理 (uv + pyproject.toml) | 🔶 了解中 |
+| Git仓库管理 | 分支策略、提交规范 | 🔶 了解中 |
+
+**Day 1 进度**：
+- Python 3.12 虚拟环境配置完成
+- 149 packages 依赖安装成功
+- ChromaDB 0.4.24 + LlamaIndex 0.14.20 集成完成
 
 ### Phase 1: 基础问答Agent (Day 4-15)
 

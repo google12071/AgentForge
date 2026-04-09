@@ -10,16 +10,18 @@
 
 ## 技术栈
 
-| 类别 | 选择 | 版本 |
-|------|------|------|
-| Python | 3.11 | - |
-| Agent 框架 | LangChain + LangGraph | v1.x |
-| 向量数据库 | ChromaDB | v0.5.x |
-| LLM | 通义千问 / DeepSeek | - |
-| 嵌入模型 | 通义千问 text-embedding | - |
-| 配置管理 | Pydantic Settings | v2.x |
-| 日志 | Loguru | v0.7.x |
+| 类别 | 选择 | 实际版本 |
+|------|------|---------|
+| Python | 3.12 | 3.12.12 |
+| Agent 框架 | LangChain + LangGraph | 1.2.15 + 1.1.6 |
+| 向量数据库 | ChromaDB | 0.4.24 (macOS Intel 兼容) |
+| RAG 框架 | LlamaIndex | 0.14.20 |
+| LLM | 通义千问 / DeepSeek | qwen-plus / deepseek-chat |
+| 嵌入模型 | 通义千问 text-embedding | text-embedding-v3 |
+| 配置管理 | Pydantic Settings | 2.13.1 |
+| 日志 | Loguru | 0.7.3 |
 | 测试 | pytest | v8.x |
+| 包管理 | uv | 最新版 |
 
 ## 项目结构
 
@@ -51,13 +53,16 @@ AgentForge/
 git clone https://github.com/lfq/AgentForge.git
 cd AgentForge
 
-# 创建虚拟环境
-python3.11 -m venv .venv
+# 使用 uv 创建 Python 3.12 虚拟环境
+uv venv --python 3.12
 source .venv/bin/activate  # Linux/Mac
 # 或 .venv\Scripts\activate  # Windows
 
 # 安装依赖
-pip install -e ".[dev]"
+uv sync
+
+# 安装开发依赖
+uv sync --extra dev
 ```
 
 ### 2. 配置 API Key
@@ -79,15 +84,23 @@ pytest tests/
 
 ## 开发阶段
 
-| 阶段 | 时间 | 内容 |
-|------|------|------|
-| Phase 0 | Day 1-3 | 项目初始化 |
-| Phase 1 | Day 4-15 | 基础问答 Agent |
-| Phase 2 | Day 16-30 | RAG 知识库 |
-| Phase 3 | Day 31-50 | 工具调用 Agent |
-| Phase 4 | Day 51-70 | 工作流 Agent |
-| Phase 5 | Day 71-85 | Harness 工程化 |
-| Phase 6 | Day 86-90 | 平台整合 |
+| 阶段 | 时间 | 内容 | 进度 |
+|------|------|------|------|
+| Phase 0 | Day 1-3 | 项目初始化 | Day 1 ✅ |
+| Phase 1 | Day 4-15 | 基础问答 Agent | - |
+| Phase 2 | Day 16-30 | RAG 知识库 | - |
+| Phase 3 | Day 31-50 | 工具调用 Agent | - |
+| Phase 4 | Day 51-70 | 工作流 Agent | - |
+| Phase 5 | Day 71-85 | Harness 工程化 | - |
+| Phase 6 | Day 86-90 | 平台整合 | - |
+
+## 当前状态
+
+- **Python**: 3.12.12 (虚拟环境)
+- **依赖**: 149 packages 已安装
+- **核心框架**: LangChain 1.2.15 + LangGraph 1.1.6
+- **向量数据库**: ChromaDB 0.4.24 + onnxruntime 1.19.2
+- **RAG框架**: LlamaIndex 0.14.20
 
 ## 许可证
 
